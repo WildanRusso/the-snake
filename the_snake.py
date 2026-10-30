@@ -1,6 +1,5 @@
-from random import randint
-
 import pygame
+from random import randint
 
 
 SCREEN_WIDTH, SCREEN_HEIGHT = 640, 480
@@ -25,6 +24,7 @@ clock = None
 
 
 class GameObject:
+
     def __init__(self, position, body_color):
         self.position = position
         self.body_color = body_color
@@ -34,6 +34,7 @@ class GameObject:
 
 
 class Apple(GameObject):
+
     def __init__(self):
         super().__init__(
             position=(0, 0),
@@ -57,6 +58,7 @@ class Apple(GameObject):
 
 
 class Snake(GameObject):
+
     def __init__(self):
         super().__init__(
             position=(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2),
@@ -194,6 +196,10 @@ def main():
         apple.draw()
 
         pygame.display.update()
+
+
+if __name__ == '__main__':
+    main()
 
 
 if __name__ == '__main__':
