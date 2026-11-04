@@ -19,14 +19,19 @@ SNAKE_COLOR = (0, 255, 0)
 
 SPEED = 20
 
-screen = None
-clock = None
+pygame.init()
+screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
+clock = pygame.time.Clock()
 
 
 class GameObject:
     """Базовый класс игрового объекта."""
 
-    def __init__(self, position, body_color):
+    def __init__(
+        self,
+        position=(0, 0),
+        body_color=BOARD_BACKGROUND_COLOR,
+    ):
         """Инициализировать позицию и цвет объекта."""
         self.position = position
         self.body_color = body_color
@@ -89,9 +94,8 @@ class Snake(GameObject):
 
     def move(self):
         """Переместить змейку на одну клетку."""
-        head_x, head_y = self.get_head_position()
+         head_x, head_y = self.get_head_position()
         dx, dy = self.direction
-
         new_head = (
             (head_x + dx * GRID_SIZE) % SCREEN_WIDTH,
             (head_y + dy * GRID_SIZE) % SCREEN_HEIGHT,
@@ -149,26 +153,22 @@ def handle_keys(game_object):
         if event.type == pygame.QUIT:
             pygame.quit()
             raise SystemExit
-
         if event.type == pygame.KEYDOWN:
             if (
                 event.key == pygame.K_UP
                 and game_object.direction != DOWN
             ):
                 game_object.next_direction = UP
-
             elif (
                 event.key == pygame.K_DOWN
                 and game_object.direction != UP
             ):
                 game_object.next_direction = DOWN
-
             elif (
                 event.key == pygame.K_LEFT
                 and game_object.direction != RIGHT
             ):
                 game_object.next_direction = LEFT
-
             elif (
                 event.key == pygame.K_RIGHT
                 and game_object.direction != LEFT
@@ -178,15 +178,13 @@ def handle_keys(game_object):
 
 def main():
     """Запустить основной игровой цикл."""
-    global screen, clock
+    global screen
 
     pygame.init()
-
     screen = pygame.display.set_mode(
         (SCREEN_WIDTH, SCREEN_HEIGHT)
     )
     pygame.display.set_caption('Змейка')
-    clock = pygame.time.Clock()
 
     snake = Snake()
     apple = Apple()
@@ -201,7 +199,6 @@ def main():
         if snake.get_head_position() == apple.position:
             snake.length += 1
             apple.randomize_position()
-
         if snake.get_head_position() in snake.positions[1:]:
             snake.reset()
 
