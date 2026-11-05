@@ -61,16 +61,20 @@ class GameObject:
 class Apple(GameObject):
     """Класс яблока, которое собирает змейка."""
 
-    def __init__(self, occupied_positions):
+    def __init__(self, occupied_positions=None):
         """Создать яблоко с учётом занятых клеток."""
+        if occupied_positions is None:
+            occupied_positions = []
         super().__init__(
             position=(0, 0),
             body_color=APPLE_COLOR,
         )
         self.randomize_position(occupied_positions)
 
-    def randomize_position(self, occupied_positions):
+    def randomize_position(self, occupied_positions=None):
         """Переместить яблоко в свободную случайную клетку."""
+        if occupied_positions is None:
+            occupied_positions = []
         while True:
             position = (
                 randint(0, GRID_WIDTH - 1) * GRID_SIZE,
